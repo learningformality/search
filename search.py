@@ -9,19 +9,17 @@ class EightPuzzle:
 
 
 	def __init__(self, initial, goal=(1, 2, 3, 4, 5, 6, 7, 8, 0)):
-		""" Define goal state and initialize a problem """
+		# initialize goal state
 		self.initial = initial
 		self.goal = goal
 
 	def find_blank_square(self, state):
-		"""Return the index of the blank square in a given state"""
+		# returns position of blank square
 
 		return state.index(0)
 
 	def actions(self, state):
-		""" Return the actions that can be executed in the given state.
-		The result would be a list, since there are only four possible actions
-		in any given state of the environment """
+		# return possible actions of the blank square in the 8-puzzle, restricted by how the 8-puzzle works
 
 		possible_actions = ['UP', 'DOWN', 'LEFT', 'RIGHT']
 		# blank is the index of the blank square
@@ -39,8 +37,7 @@ class EightPuzzle:
 		return possible_actions
 
 	def result(self, state, action):
-		""" Given state and action, return a new state that is the result of the action.
-		Action is assumed to be a valid action in the state """
+		# return the result of a specific action
 
 		# blank is the index of the blank square
 		blank = self.find_blank_square(state)
@@ -53,19 +50,18 @@ class EightPuzzle:
 		return tuple(new_state)
 
 	def goal_test(self, state):
-		""" Given a state, return True if state is a goal state or False, otherwise """
+		# test to see if a given state is the goal state
 
 		return state == self.goal
 
 	def h(self, state):
-		""" Return the heuristic value for a given state. Default heuristic function used is 
-		h(n) = number of misplaced tiles. """
+		# this is the Hamming distance heuristic, which is quite bad as a heuristic
 
 		return sum(s != g for (s, g) in zip(state, self.goal))
 		
 	def h0(self, state):
-		""" This is the Manhattan distance which finds the total distance between the current state and
-			where each tile should be in the goal state"""
+		# this is the Manhattan distance which finds the total distance between the current state and
+		# where each tile should be in the goal state
 		
 		return sum(abs(s-g) for (s, g) in zip(state, self.goal))
 parent_vals = []
